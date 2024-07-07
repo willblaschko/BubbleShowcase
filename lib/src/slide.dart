@@ -118,7 +118,7 @@ abstract class BubbleSlide {
                 .replaceAll(':n', slidesCount.toString()),
             style: Theme.of(context)
                 .textTheme
-                .bodyText2!
+                .bodyMedium!
                 .copyWith(color: writeColor),
             textAlign: TextAlign.center,
           ),

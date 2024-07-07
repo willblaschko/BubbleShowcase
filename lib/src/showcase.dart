@@ -51,7 +51,7 @@ class BubbleShowcase extends StatefulWidget {
   State<StatefulWidget> createState() => _BubbleShowcaseState();
 
   /// Whether this showcase should be opened.
-  Future<bool> get shouldOpenShowcase async {
+  Future<bool?> get shouldOpenShowcase async {
     if (!enabled) {
       return false;
     }
@@ -61,7 +61,7 @@ class BubbleShowcase extends StatefulWidget {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     bool? result =
         preferences.getBool('$bubbleShowcaseId.$bubbleShowcaseVersion');
-    return result == null || result;
+    return result;
   }
 }
 
@@ -77,7 +77,8 @@ class _BubbleShowcaseState extends State<BubbleShowcase>
   @override
   void initState() {
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
-      if (await widget.shouldOpenShowcase) {
+      bool shouldOpen = await widget.shouldOpenShowcase ?? false;
+      if (shouldOpen) {
         await Future.delayed(widget.initialDelay);
         if (mounted) {
           goToNextEntryOrClose(0);
